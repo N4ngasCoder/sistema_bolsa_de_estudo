@@ -4,17 +4,17 @@
 
 import Link from "next/link";
 import type { CSSProperties } from "react";
-
-
+import Image from "next/image";
+//definicao de cores 
 const c = {
-  bg: "#0B1426",
-  card: "#111E36",
-  chip: "#172745",
-  line: "#243658",
-  text: "#E8EDF7",
-  muted: "#9FB0CC",
-  gold: "#E3B341",
-  teal: "#7FE0D6",
+  bg: "#FFFFFF",     // fundo da página
+  card: "#F5F8FF",   // fundo dos cartões
+  chip: "#E8EFFD",   // etiquetas e caixas de imagem
+  line: "#D5DEEF",   // linhas e bordas
+  text: "#0F1B33",   // texto principal (azul quase preto)
+  muted: "#5B6B87",  // texto secundário
+  gold: "#1D4ED8",   // AGORA É O AZUL DOS BOTÕES
+  teal: "#1D4ED8",   // etiquetas azuis
 };
 
 const wrap: CSSProperties = {
@@ -95,26 +95,43 @@ export default function HomePage() {
           <span style={{ width: 28, height: 28, borderRadius: 8, background: c.gold, display: "inline-block" }} />
           BolsaMentor
         </Link>
+        
+        {/* NAVbar  */}
         <nav style={{ display: "flex", flexWrap: "wrap", gap: 28, fontWeight: 500 }}>
           <Link href="/bolsas" style={{ color: c.text, textDecoration: "none" }}>Bolsas</Link>
           <Link href="/mentores" style={{ color: c.text, textDecoration: "none" }}>Mentores</Link>
           <a href="#como" style={{ color: c.text, textDecoration: "none" }}>Como funciona</a>
           <a href="#mentores" style={{ color: c.text, textDecoration: "none" }}>Para mentores</a>
         </nav>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-          <Link href="/entrar" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 14px", fontWeight: 500, color: c.text, textDecoration: "none" }}>
-            Entrar
-          </Link>
-          <Link href="/entrar" style={btnGold}>Criar conta</Link>
-        </div>
+
+     
+<div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
+  <Link
+    href="/entrar"
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      minHeight: 44,
+      padding: "0 14px",
+      fontWeight: 500,
+      color: c.text,
+      textDecoration: "none",
+    }}
+  >
+    Entrar
+  </Link>
+
+  <Link href="/cadastro" style={btnGold}>
+    Criar conta
+  </Link>
+</div>
+
       </header>
 
       {/* Hero */}
       <section style={{ ...wrap, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 48, paddingTop: 72 }}>
         <div style={{ flex: "1 1 520px", display: "flex", flexDirection: "column", gap: 24 }}>
-          <span style={{ alignSelf: "flex-start", padding: "4px 12px", borderRadius: 999, background: c.chip, color: c.teal, fontSize: 13, fontWeight: 500 }}>
-            Bolsas de estudo + mentoria
-          </span>
+          
           <h1 style={{ margin: 0, fontSize: "clamp(34px, 5vw, 56px)", lineHeight: 1.1 }}>
             Encontre a bolsa certa. Candidate-se com um mentor ao seu lado.
           </h1>
@@ -154,21 +171,22 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div style={{ flex: "1 1 380px", display: "flex", flexDirection: "column", gap: 16 }}>
-          <div style={{ height: 340, borderRadius: 20, background: c.chip, border: "1px dashed #3A4F7A", display: "flex", alignItems: "center", justifyContent: "center", color: c.muted, fontSize: 14 }}>
-            Imagem principal / ilustração
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
-            <div style={{ ...card, flex: "1 1 160px", padding: 16, borderRadius: 14 }}>
-              <div style={{ fontSize: 13, color: c.muted }}>Próximo prazo</div>
-              <div style={{ fontWeight: 600, fontSize: 18 }}>[dd/mm/aaaa]</div>
-            </div>
-            <div style={{ ...card, flex: "1 1 160px", padding: 16, borderRadius: 14 }}>
-              <div style={{ fontSize: 13, color: c.muted }}>Novas bolsas esta semana</div>
-              <div style={{ fontWeight: 600, fontSize: 18 }}>[n]</div>
-            </div>
-          </div>
-        </div>
+<div style={{ flex: "1 1 380px", display: "flex", flexDirection: "column", gap: 16 }}>
+
+  {/* Imagem principal */}
+  <div style={{ position: "relative", width: "100%", height: 340, borderRadius: 20, overflow: "hidden" }}>
+    <Image
+      src="/imagem_principal.jpg"
+      alt="Estudantes a preparar candidaturas a bolsas"
+      fill
+      priority
+      style={{ objectFit: "cover" }}
+    />
+  </div>
+
+  
+
+</div>
       </section>
 
       {/* Como funciona */}
@@ -197,17 +215,46 @@ export default function HomePage() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
           {bolsas.map((b) => (
             <article key={b.id} style={{ ...card, flex: "1 1 300px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-              <div style={{ height: 120, background: c.chip, borderBottom: "1px dashed #3A4F7A", display: "flex", alignItems: "center", justifyContent: "center", color: c.muted, fontSize: 13 }}>
-                Imagem da bolsa
-              </div>
+              {b.imagem && (
+                <div style={{ position: "relative", height: 120, borderBottom: `1px solid ${c.line}` }}>
+                  <Image src={b.imagem} alt={b.titulo} fill style={{ objectFit: "cover" }} />
+                </div>
+              )}
               <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   <span style={{ padding: "4px 10px", borderRadius: 999, background: c.chip, color: c.teal, fontSize: 12, fontWeight: 500 }}>{b.nivel}</span>
-                  <span style={{ padding: "4px 10px", borderRadius: 999, background: c.chip, color: "#F0CB6E", fontSize: 12, fontWeight: 500 }}>{b.fin}</span>
+                  <span style={{ padding: "4px 10px", borderRadius: 999, background: c.chip, color: c.gold, fontSize: 12, fontWeight: 500 }}>{b.fin}</span>
                 </div>
                 <h3 style={{ margin: 0, fontSize: 18 }}>{b.titulo}</h3>
                 <div style={{ color: c.muted, fontSize: 14 }}>{b.pais} · Prazo {b.prazo}</div>
-                <Link href={`/bolsas/${b.id}`} style={{ color: c.gold, fontWeight: 700, textDecoration: "none" }}>Ver detalhes</Link>
+                <Link href={b.link ?? `/bolsas/${b.id}`} style={{ color: c.gold, fontWeight: 700, textDecoration: "none" }}>Ver detalhes</Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      {/* Bolsas em destaque */}
+      <section style={wrap}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 24 }}>
+          <h2 style={{ margin: 0, fontSize: 30 }}>Bolsas em destaque</h2>
+          <Link href="/bolsas" style={{ color: c.gold, fontWeight: 500, textDecoration: "none" }}>Ver todas as bolsas</Link>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
+          {bolsas.map((b) => (
+            <article key={b.id} style={{ ...card, flex: "1 1 300px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+              {b.imagem && (
+                <div style={{ position: "relative", height: 120, borderBottom: `1px solid ${c.line}` }}>
+                  <Image src={b.imagem} alt={b.titulo} fill style={{ objectFit: "cover" }} />
+                </div>
+              )}
+              <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  <span style={{ padding: "4px 10px", borderRadius: 999, background: c.chip, color: c.teal, fontSize: 12, fontWeight: 500 }}>{b.nivel}</span>
+                  <span style={{ padding: "4px 10px", borderRadius: 999, background: c.chip, color: c.gold, fontSize: 12, fontWeight: 500 }}>{b.fin}</span>
+                </div>
+                <h3 style={{ margin: 0, fontSize: 18 }}>{b.titulo}</h3>
+                <div style={{ color: c.muted, fontSize: 14 }}>{b.pais} · Prazo {b.prazo}</div>
+                <Link href={b.link ?? `/bolsas/${b.id}`} style={{ color: c.gold, fontWeight: 700, textDecoration: "none" }}>Ver detalhes</Link>
               </div>
             </article>
           ))}
