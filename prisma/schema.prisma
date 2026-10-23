@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id             String   @id @default(cuid())
+  nome           String
+  apelido        String
+  email          String   @unique
+  telefone       String?
+  dataNascimento DateTime?
+  genero         String?
+  pais           String   @default("Angola")
+  cidade         String?
+  papel          String   @default("estudante")
+  password       String
+  createdAt      DateTime @default(now())
+}
