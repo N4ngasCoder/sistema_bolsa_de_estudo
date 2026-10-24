@@ -1,44 +1,51 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@/app/generated/prisma";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { prisma } from "@/lib/prisma";
 
-const adapter = new PrismaBetterSqlite3({ url: "file:./prisma/dev.db" });
-const prisma = new PrismaClient({ adapter });
+const txt = (v: unknown, max = 200) => String(v ?? "").trim().slice(0, max);
+const emDev = process.env.NODE_ENV !== "production";
 
 export async function POST(req: Request) {
   try {
-    const dados = await req.json();
+    const b = await req.json();
+    const nome = txt(b.nome, 120);
+    const emailNorm = txt(b.email, 200).toLowerCase();
+    const senha = String(b.senha ?? "");
 
-    if (!dados.email || !dados.password || !dados.nome) {
-      return NextResponse.json({ erro: "Faltam campos obrigatórios" }, { status: 400 });
-    }
+    if (!nome || !emailNorm || !/^\S+@\S+\.\S+$/.test(emailNorm) || senha.length < 8)
+      return NextResponse.json({ erro: "Dados inválidos. Verifica o email e usa uma palavra-passe com 8+ caracteres." }, { status: 400 });
 
-    const existe = await prisma.user.findUnique({ where: { email: dados.email } });
-    if (existe) {
-      return NextResponse.json({ erro: "Este email já existe" }, { status: 400 });
-    }
+    const existe = await prisma.user.findUnique({ where: { email: emailNorm } });
+    if (existe) return NextResponse.json({ erro: "Este email já está registado." }, { status: 409 });
 
-    const hash = await bcrypt.hash(dados.password, 10);
-
+    // Guardamos SÓ o hash (nunca a senha em texto).
+    const hash = await bcrypt.hash(senha, 10);
     await prisma.user.create({
       data: {
-        nome: dados.nome,
-        apelido: dados.apelido || "",
-        email: dados.email,
-        telefone: dados.telefone || null,
-        genero: dados.genero || null,
-        pais: dados.pais || "Angola",
-        cidade: dados.cidade || null,
-        papel: dados.papel || "estudante",
-        password: hash,
-        dataNascimento: dados.dataNascimento ? new Date(dados.dataNascimento) : null,
+        nome,
+        email: emailNorm,
+        senha: hash,
+        // "role" fica sempre USER aqui: ninguém ganha permissões de admin a partir do formulário.
+        tipoConta: txt(b.papel, 20).toLowerCase() === "mentor" ? "MENTOR" : "ESTUDANTE",
+        telefone: txt(b.telefone, 30),
+        dataNascimento: txt(b.dataNascimento, 10),
+        genero: txt(b.genero, 20),
+        pais: txt(b.pais, 80),
+        cidade: txt(b.cidade, 80),
+        instituicao: txt(b.instituicao, 160),
+        nivel: txt(b.nivel, 40),
+        area: txt(b.area, 120),
       },
     });
-
-    return NextResponse.json({ ok: true });
-  } catch (error: any) {
-    console.error("ERRO CADASTRO:", error);
-    return NextResponse.json({ erro: error.message || "Erro interno" }, { status: 500 });
+    return NextResponse.json({ ok: true }, { status: 201 });
+  } catch (e) {
+    console.error("[cadastro]", e);
+    // Corrida: dois pedidos ao mesmo tempo com o mesmo email.
+    if (typeof e === "object" && e && (e as { code?: string }).code === "P2002")
+      return NextResponse.json({ erro: "Este email já está registado." }, { status: 409 });
+    return NextResponse.json(
+      { erro: "Erro ao criar conta.", ...(emDev && { detalhe: e instanceof Error ? e.message.split("\n").filter(Boolean).pop() : String(e) }) },
+      { status: 500 },
+    );
   }
 }

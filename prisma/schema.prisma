@@ -1,23 +1,68 @@
+// SQLite não suporta @db.Text — String já guarda texto longo.
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id             String   @id @default(cuid())
-  nome           String
-  apelido        String
-  email          String   @unique
-  telefone       String?
-  dataNascimento DateTime?
-  genero         String?
-  pais           String   @default("Angola")
-  cidade         String?
-  papel          String   @default("estudante")
-  password       String
-  createdAt      DateTime @default(now())
+  id           String                @id @default(cuid())
+  nome         String
+  email        String                @unique
+  senha        String
+  role         String                @default("USER")   // permissão: USER | ADMIN (só o script criar-admin / o admin alteram)
+  tipoConta    String                @default("ESTUDANTE") // escolha no cadastro: ESTUDANTE | MENTOR (não dá permissões)
+  telefone       String              @default("")
+  dataNascimento String              @default("")
+  genero         String              @default("")
+  pais           String              @default("")
+  cidade         String              @default("")
+  instituicao    String              @default("")
+  nivel          String              @default("")
+  area           String              @default("")
+  createdAt    DateTime              @default(now())
+  solicitacoes SolicitacaoMentoria[]
+}
+
+model Bolsa {
+  id           String                @id @default(cuid())
+  titulo       String
+  pais         String
+  instituicao  String
+  descricao    String
+  requisitos   String
+  linkOficial  String
+  status       String                @default("ATIVA")
+  createdAt    DateTime              @default(now())
+  mentorias    Mentoria[]
+  solicitacoes SolicitacaoMentoria[]
+}
+
+model Mentoria {
+  id             String                @id @default(cuid())
+  titulo         String
+  descricao      String
+  preco          Float
+  mentorNome     String
+  mentorWhatsapp String
+  bolsaId        String
+  bolsa          Bolsa                 @relation(fields: [bolsaId], references: [id], onDelete: Cascade)
+  createdAt      DateTime              @default(now())
+  solicitacoes   SolicitacaoMentoria[]
+}
+
+model SolicitacaoMentoria {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mentoriaId      String
+  mentoria        Mentoria @relation(fields: [mentoriaId], references: [id], onDelete: Cascade)
+  bolsaId         String
+  bolsa           Bolsa    @relation(fields: [bolsaId], references: [id], onDelete: Cascade)
+  status          String   @default("PAGAMENTO_PENDENTE")
+  foiParaWhatsapp Boolean  @default(false)
+  createdAt       DateTime @default(now())
 }
