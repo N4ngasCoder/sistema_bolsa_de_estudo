@@ -75,11 +75,40 @@ export default function EntrarPage() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
+<<<<<<< HEAD
         background: "#F5F8FF",
         color: "#0F1B33",
         fontFamily: "Arial, sans-serif",
       }}
     >
+=======
+        // background: "#F5F8FF", // (antigo, comentado)
+        background: "linear-gradient(180deg, #c2c8d2 0%, #3e4b67 100%)", // paleta escura igual à landing page
+        color: "#dfe2e8",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      {/* Efeito hover escuro nos botões */}
+      <style>{`
+        .btn-voltar,
+        .btn-entrar { transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease; }
+
+        .btn-voltar:hover {
+          background: #374151 !important;
+          color: #FFFFFF !important;
+          transform: translateY(-2px);
+          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+        }
+
+        .btn-entrar:hover:not(:disabled) {
+          background: #374151 !important;
+          color: #FFFFFF !important;
+          transform: translateY(-2px);
+          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+        }
+      `}</style>
+
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
       {/* Navegação */}
       <header
         style={{
@@ -87,19 +116,58 @@ export default function EntrarPage() {
           boxSizing: "border-box",
           padding: "22px 6%",
           borderBottom: "1px solid #E2E8F5",
+<<<<<<< HEAD
           background: "#FFFFFF",
+=======
+          background: "#3A4F7A",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
         }}
       >
         <Link
           href="/"
           style={{
+<<<<<<< HEAD
             color: "#1D4ED8",
+=======
+            color: "#fff",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
             fontSize: 21,
             fontWeight: 800,
             textDecoration: "none",
           }}
         >
+<<<<<<< HEAD
           BolsaMentor
+=======
+          BEEESTUDO
+        </Link>
+
+        {/* Botão de voltar (movido para o cabeçalho) */}
+        <Link
+          href="/"
+          className="btn-voltar"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 40,
+            padding: "0 20px",
+            borderRadius: 999,
+            border: "1px solid #74cee9",
+            background: "#74cee9",
+            color: "#0A1428",
+            fontSize: 14,
+            fontWeight: 700,
+            textDecoration: "none",
+          }}
+        >
+          ← Voltar à página inicial
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
         </Link>
       </header>
 
@@ -121,7 +189,11 @@ export default function EntrarPage() {
             boxSizing: "border-box",
             border: "1px solid #E2E8F5",
             borderRadius: 18,
+<<<<<<< HEAD
             background: "#FFFFFF",
+=======
+            background: "#3A4F7A",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
             boxShadow: "0 12px 40px rgba(15, 27, 51, 0.06)",
           }}
         >
@@ -139,7 +211,11 @@ export default function EntrarPage() {
                 fontWeight: 700,
               }}
             >
+<<<<<<< HEAD
               BEM-VINDO DE VOLTA
+=======
+            
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
             </div>
 
             <h1
@@ -160,8 +236,12 @@ export default function EntrarPage() {
                 lineHeight: 1.7,
               }}
             >
+<<<<<<< HEAD
               Acede à tua conta e continua a explorar
               oportunidades académicas.
+=======
+             
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
             </p>
           </div>
 
@@ -195,7 +275,11 @@ export default function EntrarPage() {
             {/* Email */}
             <div>
               <label htmlFor="email" style={estiloLabel}>
+<<<<<<< HEAD
                 Endereço de email
+=======
+                
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
               </label>
 
               <input
@@ -207,7 +291,11 @@ export default function EntrarPage() {
                   setEmail(e.target.value);
                   setErro("");
                 }}
+<<<<<<< HEAD
                 placeholder="exemplo@email.com"
+=======
+                placeholder="Digite o seu email "
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                 autoComplete="email"
                 required
                 style={estiloCampo}
@@ -229,7 +317,11 @@ export default function EntrarPage() {
                   htmlFor="password"
                   style={{ ...estiloLabel, marginBottom: 0 }}
                 >
+<<<<<<< HEAD
                   Palavra-passe
+=======
+                 
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                 </label>
 
                 <Link
@@ -241,7 +333,11 @@ export default function EntrarPage() {
                     textDecoration: "none",
                   }}
                 >
+<<<<<<< HEAD
                   Esqueceste-te?
+=======
+                 
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                 </Link>
               </div>
 
@@ -282,7 +378,11 @@ export default function EntrarPage() {
                     padding: "6px 0",
                     border: "none",
                     background: "transparent",
+<<<<<<< HEAD
                     color: "#1D4ED8",
+=======
+                    color: "#74cee9",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                     fontSize: 12,
                     fontWeight: 700,
                     cursor: "pointer",
@@ -316,21 +416,34 @@ export default function EntrarPage() {
                 style={{ accentColor: "#1D4ED8" }}
               />
 
+<<<<<<< HEAD
               Manter sessão iniciada
+=======
+             
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
             </label>
 
             {/* Botão de entrada */}
             <button
               type="submit"
               disabled={aCarregar}
+<<<<<<< HEAD
+=======
+              className="btn-entrar"
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
               style={{
                 width: "100%",
                 minHeight: 50,
                 padding: "14px 20px",
                 border: "none",
                 borderRadius: 10,
+<<<<<<< HEAD
                 background: "#1D4ED8",
                 color: "#FFFFFF",
+=======
+                background: "#74cee9",
+                color: "rgb(20, 20, 20)",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                 fontSize: 16,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -375,7 +488,11 @@ export default function EntrarPage() {
             style={{
               margin: 0,
               textAlign: "center",
+<<<<<<< HEAD
               color: "#5B6B87",
+=======
+              color: "#fff",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
               fontSize: 14,
               lineHeight: 1.8,
             }}
@@ -384,7 +501,11 @@ export default function EntrarPage() {
             <Link
               href="/cadastro"
               style={{
+<<<<<<< HEAD
                 color: "#1D4ED8",
+=======
+                color: "#74cee9",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
                 fontWeight: 700,
                 textDecoration: "none",
               }}
@@ -393,6 +514,10 @@ export default function EntrarPage() {
             </Link>
           </p>
 
+<<<<<<< HEAD
+=======
+          {/* Link de voltar antigo (comentado — agora está no cabeçalho)
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
           <Link
             href="/"
             style={{
@@ -406,6 +531,10 @@ export default function EntrarPage() {
           >
             ← Voltar à página inicial
           </Link>
+<<<<<<< HEAD
+=======
+          */}
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
         </section>
       </div>
 
@@ -414,7 +543,11 @@ export default function EntrarPage() {
         style={{
           padding: "20px 16px",
           textAlign: "center",
+<<<<<<< HEAD
           color: "#64748B",
+=======
+          color: "#fff",
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
           fontSize: 13,
         }}
       >

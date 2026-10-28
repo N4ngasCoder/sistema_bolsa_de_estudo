@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
+<<<<<<< HEAD
 import BotaoSair from "./BotaoSair";
+=======
+import IconeUserSessao from "./IconeUserSessao";
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
 
 export default async function BarraTopo() {
   const s = await obterSessao();
@@ -12,7 +16,11 @@ export default async function BarraTopo() {
         {s && <Link href="/dashboard">Minhas solicitações</Link>}
         {s?.role === "ADMIN" && <Link href="/admin/solicitacoes">Admin</Link>}
         {s ? (
+<<<<<<< HEAD
           <BotaoSair />
+=======
+          <IconeUserSessao />
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
         ) : (
           <>
             <Link href="/entrar">Entrar</Link>
@@ -22,4 +30,8 @@ export default async function BarraTopo() {
       </nav>
     </header>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 03e784d2230009cb9581d5ba6e665f82a445c4f2
